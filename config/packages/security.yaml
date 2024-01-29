@@ -1,0 +1,20 @@
+# config/packages/security.yaml
+
+security:
+    firewalls:
+        api_key_secured:
+            pattern: ^/v1/reservas
+            stateless: true
+            simple_preauth:
+                authenticator: App\Security\ApiKeyAuthenticator
+            provider: api_key_provider
+
+    access_control:
+        - { path: ^/v1/reservas, roles: IS_AUTHENTICATED_FULLY }
+
+    providers:
+        api_key_provider:
+            id: 'App\Security\ApiKeyUserProvider'
+
+    encoders:
+        App\Entity\Client: plaintext
